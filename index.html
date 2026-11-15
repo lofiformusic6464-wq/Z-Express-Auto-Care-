@@ -1,1 +1,103 @@
+<!doctype html>
+<html lang="bn">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#111827"><title>Z EXPRESSAUTOCARE Khata Book</title>
+<style>
+:root{--bg:#f3f5f9;--card:#fff;--ink:#172033;--muted:#687386;--accent:#f2b632;--nav:#111827;--line:#e6e9ef;--green:#13845b;--red:#c33b45}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px system-ui,-apple-system,"Noto Sans Bengali",sans-serif}
+header{background:var(--nav);color:#fff;padding:18px 16px 14px;position:sticky;top:0;z-index:3}header .brand{font-size:18px;font-weight:800;letter-spacing:.3px}header small{color:#cbd5e1}header button{float:right}
+main{max-width:850px;margin:auto;padding:14px 12px 90px}.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.stat,.panel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:13px;margin-bottom:11px}.stat span{font-size:12px;color:var(--muted)}.stat strong{display:block;font-size:21px;margin-top:5px}.green{color:var(--green)}.red{color:var(--red)}
+nav{display:flex;gap:7px;overflow:auto;padding:12px 0;position:sticky;top:65px;background:var(--bg);z-index:2}nav button{white-space:nowrap;border:1px solid var(--line);background:#fff;border-radius:20px;padding:9px 13px;color:var(--ink)}nav button.active{background:var(--nav);color:#fff}
+h2{font-size:18px;margin:4px 0 12px}.row{display:flex;gap:8px;flex-wrap:wrap}.row>*{flex:1;min-width:130px}
+input,select,textarea{width:100%;padding:11px;border:1px solid #d9dee8;border-radius:9px;background:#fff;font:inherit;margin:5px 0 10px;color:var(--ink)}label{font-size:13px;color:var(--muted)}button{cursor:pointer;font:inherit}.btn{border:0;background:var(--nav);color:white;padding:11px 14px;border-radius:9px}.btn.gold{background:var(--accent);color:#231b08;font-weight:700}.btn.light{background:#eef1f6;color:var(--ink)}.btn.danger{background:#fff0f0;color:var(--red)}.full{width:100%}
+.item{border-bottom:1px solid var(--line);padding:11px 0;display:flex;justify-content:space-between;gap:10px}.item:last-child{border:0}.muted{color:var(--muted);font-size:12px}.amount{font-weight:750;white-space:nowrap}.hidden{display:none!important}.empty{text-align:center;color:var(--muted);padding:22px}.pill{font-size:11px;padding:3px 7px;border-radius:20px;background:#eef1f6}.actions{display:flex;gap:6px;margin-top:7px}.actions button{font-size:12px;padding:6px 9px}.notice{background:#fff7df;border:1px solid #f3df9d;border-radius:10px;padding:10px;font-size:12px;color:#634b0c;margin:10px 0}
+footer{text-align:center;color:var(--muted);font-size:11px;padding:18px}
+@media(min-width:600px){.stats{grid-template-columns:repeat(4,1fr)}}
+</style></head>
+<body>
+<header><button class="btn light" id="langBtn" style="float:right;padding:7px 10px">বাংলা / EN</button><div class="brand">🔧 Z EXPRESSAUTOCARE</div><small>KHATA BOOK · GARAGE MANAGER</small></header>
+<main>
+<div id="dashboard">
+ <div class="stats">
+  <div class="stat"><span data-bn="আজকের আয়" data-en="Today's income">আজকের আয়</span><strong class="green" id="todayIncome">₹0</strong></div>
+  <div class="stat"><span data-bn="আজকের খরচ" data-en="Today's expenses">আজকের খরচ</span><strong class="red" id="todayExpense">₹0</strong></div>
+  <div class="stat"><span data-bn="কাস্টমারের বকেয়া" data-en="Customer dues">কাস্টমারের বকেয়া</span><strong id="dues">₹0</strong></div>
+  <div class="stat"><span data-bn="এই মাসের লাভ" data-en="This month's balance">এই মাসের লাভ</span><strong id="monthBalance">₹0</strong></div>
+ </div>
+ <div class="panel"><h2 data-bn="দ্রুত কাজ" data-en="Quick actions">দ্রুত কাজ</h2><div class="row"><button class="btn gold" onclick="showTab('customers')" data-bn="+ কাস্টমার" data-en="+ Customer">+ কাস্টমার</button><button class="btn" onclick="showTab('transactions')" data-bn="+ আয় / খরচ" data-en="+ Income / Expense">+ আয় / খরচ</button></div></div>
+ <div class="panel"><h2 data-bn="সাম্প্রতিক হিসাব" data-en="Recent entries">সাম্প্রতিক হিসাব</h2><div id="recent"></div></div>
+</div>
+<nav id="nav">
+<button class="active" data-tab="dashboard" data-bn="হোম" data-en="Home">হোম</button>
+<button data-tab="customers" data-bn="কাস্টমার" data-en="Customers">কাস্টমার</button>
+<button data-tab="staff" data-bn="স্টাফ" data-en="Staff">স্টাফ</button>
+<button data-tab="transactions" data-bn="আয়-ব্যয়" data-en="Income/Expense">আয়-ব্যয়</button>
+<button data-tab="reports" data-bn="রিপোর্ট" data-en="Reports">রিপোর্ট</button>
+<button data-tab="backup" data-bn="ব্যাকআপ" data-en="Backup">ব্যাকআপ</button>
+</nav>
+<div class="notice">WhatsApp: কাস্টমারের নম্বর সেভ থাকলে বিল / কাজ শেষ / বকেয়া মেসেজ তৈরি হবে। WhatsApp খুলে Send চাপতে হবে। সম্পূর্ণ অটোমেটিক ফ্রি পাঠানো WhatsApp-এর অফিসিয়াল ব্যবস্থায় সম্ভব নয়।</div>
+<section id="customers" class="hidden">
+ <div class="panel"><h2 data-bn="নতুন কাস্টমার / গাড়ি যোগ করুন" data-en="Add customer / vehicle">নতুন কাস্টমার / গাড়ি যোগ করুন</h2>
+ <form id="customerForm"><div class="row"><div><label data-bn="কাস্টমারের নাম" data-en="Customer name">কাস্টমারের নাম</label><input required name="name"></div><div><label data-bn="মোবাইল নম্বর" data-en="Phone number">মোবাইল নম্বর</label><input name="phone" inputmode="tel"></div></div>
+ <div class="row"><div><label data-bn="গাড়ির নম্বর" data-en="Vehicle number">গাড়ির নম্বর</label><input name="vehicle"></div><div><label data-bn="গাড়ির মডেল" data-en="Vehicle model">গাড়ির মডেল</label><input name="model"></div></div>
+ <label data-bn="কাজ / সার্ভিসের বিবরণ" data-en="Work / service details">কাজ / সার্ভিসের বিবরণ</label><input name="work">
+ <div class="row"><div><label data-bn="মোট বিল (₹)" data-en="Total bill (₹)">মোট বিল (₹)</label><input name="bill" type="number" min="0" value="0"></div><div><label data-bn="জমা (₹)" data-en="Paid (₹)">জমা (₹)</label><input name="paid" type="number" min="0" value="0"></div></div>
+ <button class="btn gold full" type="submit" data-bn="কাস্টমার সেভ করুন" data-en="Save customer">কাস্টমার সেভ করুন</button></form></div>
+ <div class="panel"><h2 data-bn="কাস্টমার তালিকা" data-en="Customer list">কাস্টমার তালিকা</h2><input id="customerSearch" placeholder="নাম / গাড়ির নম্বর দিয়ে খুঁজুন"><div id="customerList"></div></div>
+</section>
+<section id="staff" class="hidden">
+ <div class="panel"><h2 data-bn="নতুন স্টাফ যোগ করুন" data-en="Add staff member">নতুন স্টাফ যোগ করুন</h2><form id="staffForm"><div class="row"><div><label data-bn="নাম" data-en="Name">নাম</label><input required name="name"></div><div><label data-bn="ফোন" data-en="Phone">ফোন</label><input name="phone"></div></div><div class="row"><div><label data-bn="মাসিক বেতন (₹)" data-en="Monthly salary (₹)">মাসিক বেতন (₹)</label><input name="salary" type="number" min="0" value="0"></div><div><label data-bn="যোগদানের তারিখ" data-en="Joining date">যোগদানের তারিখ</label><input name="joined" type="date"></div></div><button class="btn gold full" type="submit" data-bn="স্টাফ সেভ করুন" data-en="Save staff">স্টাফ সেভ করুন</button></form></div>
+ <div class="panel"><h2 data-bn="স্টাফ তালিকা" data-en="Staff list">স্টাফ তালিকা</h2><div id="staffList"></div></div>
+</section>
+<section id="transactions" class="hidden">
+ <div class="panel"><h2 data-bn="নতুন আয় / খরচ লিখুন" data-en="Add income / expense">নতুন আয় / খরচ লিখুন</h2><form id="txForm">
+ <div class="row"><div><label data-bn="ধরন" data-en="Type">ধরন</label><select name="type"><option value="income">আয় / Income</option><option value="expense">খরচ / Expense</option></select></div><div><label data-bn="তারিখ" data-en="Date">তারিখ</label><input required name="date" type="date"></div></div>
+ <div class="row"><div><label data-bn="টাকার পরিমাণ (₹)" data-en="Amount (₹)">টাকার পরিমাণ (₹)</label><input required name="amount" type="number" min="1"></div><div><label data-bn="ক্যাটাগরি" data-en="Category">ক্যাটাগরি</label><select name="category"><option>Service bill</option><option>Parts sale</option><option>Parts purchase</option><option>Staff salary</option><option>Shop expense</option><option>Other</option></select></div></div>
+ <label data-bn="বিবরণ" data-en="Description">বিবরণ</label><input name="note" placeholder="যেমন: ইঞ্জিন অয়েল / বেতন"><button class="btn gold full" type="submit" data-bn="হিসাব সেভ করুন" data-en="Save entry">হিসাব সেভ করুন</button></form></div>
+ <div class="panel"><h2 data-bn="সব লেনদেন" data-en="All transactions">সব লেনদেন</h2><div id="txList"></div></div>
+</section>
+<section id="reports" class="hidden"><div class="panel"><h2 data-bn="হিসাবের রিপোর্ট" data-en="Account reports">হিসাবের রিপোর্ট</h2><div id="reportContent"></div><button class="btn full" onclick="window.print()" data-bn="রিপোর্ট প্রিন্ট / PDF" data-en="Print / Save PDF">রিপোর্ট প্রিন্ট / PDF</button></div></section>
+<section id="backup" class="hidden"><div class="panel"><h2 data-bn="ডেটা ব্যাকআপ" data-en="Data backup">ডেটা ব্যাকআপ</h2><p class="muted" data-bn="ফোন বদলালে বা অ্যাপের ডেটা মুছে গেলে ব্যাকআপ ফাইল দিয়ে হিসাব ফেরত আনতে পারবেন।" data-en="Export a backup file so you can restore your accounts if you change phones or lose app data.">ফোন বদলালে বা অ্যাপের ডেটা মুছে গেলে ব্যাকআপ ফাইল দিয়ে হিসাব ফেরত আনতে পারবেন।</p><button class="btn gold full" onclick="exportData()" data-bn="ব্যাকআপ ডাউনলোড করুন" data-en="Download backup">ব্যাকআপ ডাউনলোড করুন</button><label data-bn="ব্যাকআপ ফাইল থেকে ফিরিয়ে আনুন" data-en="Restore from backup file">ব্যাকআপ ফাইল থেকে ফিরিয়ে আনুন</label><input type="file" id="restoreFile" accept=".json,application/json"><button class="btn full" onclick="restoreData()" data-bn="ডেটা রিস্টোর করুন" data-en="Restore data">ডেটা রিস্টোর করুন</button><div class="notice" data-bn="গুরুত্বপূর্ণ: এই ডেমো অ্যাপের ডেটা এই ফোনের ব্রাউজারে সেভ থাকে। নিয়মিত ব্যাকআপ ডাউনলোড করে রাখুন।" data-en="Important: data is saved in this phone's browser. Download backups regularly.">গুরুত্বপূর্ণ: এই ডেমো অ্যাপের ডেটা এই ফোনের ব্রাউজারে সেভ থাকে। নিয়মিত ব্যাকআপ ডাউনলোড করে রাখুন।</div></div></section>
+<footer>Z EXPRESSAUTOCARE · Illambazar, Birbhum · Offline Khata Book</footer>
+</main>
+<script>
+const KEY='zexpressautocare_khata_v1';let db=JSON.parse(localStorage.getItem(KEY)||'{"customers":[],"staff":[],"tx":[]}');let lang='bn';
+const $=id=>document.getElementById(id),money=n=>'₹'+Number(n||0).toLocaleString('en-IN',{maximumFractionDigits:2}),today=()=>new Date().toISOString().slice(0,10);
+function save(){localStorage.setItem(KEY,JSON.stringify(db));render()}
+function showTab(t){document.querySelectorAll('main>section,#dashboard').forEach(x=>x.classList.add('hidden'));$(t).classList.remove('hidden');document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.tab===t));render()}
+document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>showTab(b.dataset.tab));
+$('langBtn').onclick=()=>{lang=lang==='bn'?'en':'bn';document.querySelectorAll('[data-bn]').forEach(e=>e.textContent=e.dataset[lang]);$('customerSearch').placeholder=lang==='bn'?'নাম / গাড়ির নম্বর দিয়ে খুঁজুন':'Search name / vehicle';render()};
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+$('customerForm').onsubmit=e=>{e.preventDefault();let f=new FormData(e.target),bill=+f.get('bill'),paid=+f.get('paid');db.customers.unshift({id:Date.now(),name:f.get('name'),phone:f.get('phone'),vehicle:f.get('vehicle'),model:f.get('model'),work:f.get('work'),bill,paid,created:today()});if(paid)db.tx.unshift({id:Date.now()+1,type:'income',date:today(),amount:paid,category:'Customer payment',note:f.get('name')+' · '+(f.get('vehicle')||'')});e.target.reset();save()};
+$('staffForm').onsubmit=e=>{e.preventDefault();let f=new FormData(e.target);db.staff.unshift({id:Date.now(),name:f.get('name'),phone:f.get('phone'),salary:+f.get('salary'),joined:f.get('joined')});e.target.reset();save()};
+$('txForm').onsubmit=e=>{e.preventDefault();let f=new FormData(e.target);db.tx.unshift({id:Date.now(),type:f.get('type'),date:f.get('date'),amount:+f.get('amount'),category:f.get('category'),note:f.get('note')});e.target.reset();e.target.date.value=today();save()};
+function del(kind,id){if(confirm(lang==='bn'?'এই তথ্য মুছে ফেলবেন?':'Delete this record?')){db[kind]=db[kind].filter(x=>x.id!==id);save()}}
+function render(){
+let ti=db.tx.filter(x=>x.date===today()&&x.type==='income').reduce((a,x)=>a+x.amount,0),te=db.tx.filter(x=>x.date===today()&&x.type==='expense').reduce((a,x)=>a+x.amount,0),dues=db.customers.reduce((a,x)=>a+Math.max(0,x.bill-x.paid),0),m=new Date().toISOString().slice(0,7),mi=db.tx.filter(x=>x.date.startsWith(m)&&x.type==='income').reduce((a,x)=>a+x.amount,0),me=db.tx.filter(x=>x.date.startsWith(m)&&x.type==='expense').reduce((a,x)=>a+x.amount,0);
+$('todayIncome').textContent=money(ti);$('todayExpense').textContent=money(te);$('dues').textContent=money(dues);$('monthBalance').textContent=money(mi-me);
+$('recent').innerHTML=db.tx.slice(0,5).map(x=>txHTML(x,false)).join('')||'<div class="empty">এখনও কোনো হিসাব নেই / No entries yet</div>';
+let q=($('customerSearch').value||'').toLowerCase();$('customerList').innerHTML=db.customers.filter(c=>(c.name+c.vehicle+c.phone).toLowerCase().includes(q)).map(c=>`<div class="item"><div><b>${esc(c.name)}</b> <span class="pill">${esc(c.vehicle||'No vehicle')}</span><div class="muted">${esc(c.phone)} · ${esc(c.model)}<br>${esc(c.work)}</div><div class="muted">Bill ${money(c.bill)} · Paid ${money(c.paid)} · Due <b class="red">${money(Math.max(0,c.bill-c.paid))}</b></div><div class="actions"><button class="btn light" onclick="payCustomer(${c.id})">জমা নিন / Add payment</button><button class="btn" onclick="waCustomer(${c.id},'bill')">WhatsApp বিল</button><button class="btn" onclick="waCustomer(${c.id},'done')">কাজ শেষ মেসেজ</button><button class="btn light" onclick="waCustomer(${c.id},'due')">বকেয়া রিমাইন্ডার</button><button class="btn danger" onclick="del('customers',${c.id})">Delete</button></div></div></div>`).join('')||'<div class="empty">কাস্টমার নেই / No customers</div>';
+$('staffList').innerHTML=db.staff.map(s=>`<div class="item"><div><b>${esc(s.name)}</b><div class="muted">${esc(s.phone)} · বেতন / Salary ${money(s.salary)} · ${esc(s.joined)}</div><div class="actions"><button class="btn light" onclick="salaryPay(${s.id})">বেতন দিন / Pay salary</button><button class="btn danger" onclick="del('staff',${s.id})">Delete</button></div></div></div>`).join('')||'<div class="empty">স্টাফ নেই / No staff</div>';
+$('txList').innerHTML=db.tx.map(x=>txHTML(x,true)).join('')||'<div class="empty">লেনদেন নেই / No transactions</div>';
+$('reportContent').innerHTML=`<p>মোট কাস্টমার / Customers: <b>${db.customers.length}</b></p><p>মোট স্টাফ / Staff: <b>${db.staff.length}</b></p><p>মোট আয় / Total income: <b class="green">${money(db.tx.filter(x=>x.type==='income').reduce((a,x)=>a+x.amount,0))}</b></p><p>মোট খরচ / Total expenses: <b class="red">${money(db.tx.filter(x=>x.type==='expense').reduce((a,x)=>a+x.amount,0))}</b></p><p>কাস্টমারের বকেয়া / Customer dues: <b>${money(dues)}</b></p><p>এই মাসের লাভ-ক্ষতি / This month's balance: <b>${money(mi-me)}</b></p>`;
+}
+function txHTML(x,withDelete){return `<div class="item"><div><b>${esc(x.note||x.category)}</b><div class="muted">${esc(x.date)} · ${esc(x.category)}</div>${withDelete?`<div class="actions"><button class="btn danger" onclick="del('tx',${x.id})">Delete</button></div>`:''}</div><div class="amount ${x.type==='income'?'green':'red'}">${x.type==='income'?'+':'−'}${money(x.amount)}</div></div>`}
+function payCustomer(id){let c=db.customers.find(x=>x.id===id),v=prompt('কত টাকা জমা? / Payment amount',String(Math.max(0,c.bill-c.paid)));if(v===null||!Number.isFinite(+v)||+v<=0)return;c.paid+=+v;db.tx.unshift({id:Date.now(),type:'income',date:today(),amount:+v,category:'Customer payment',note:c.name+' · '+(c.vehicle||'')});save()}
 
+function waCustomer(id,kind){
+ let c=db.customers.find(x=>x.id===id),phone=String(c.phone||'').replace(/\D/g,'');
+ if(phone.length===10) phone='91'+phone;
+ if(phone.length<11){alert('সঠিক ১০ সংখ্যার মোবাইল নম্বর দিন / Enter a valid mobile number');return}
+ let due=Math.max(0,c.bill-c.paid),msg='';
+ if(kind==='bill') msg=`নমস্কার ${c.name},\nZ EXPRESSAUTOCARE-এ আপনার গাড়ির সার্ভিস বিল:\nগাড়ি: ${c.vehicle||'—'}\nকাজ: ${c.work||'—'}\nমোট বিল: ₹${c.bill}\nজমা: ₹${c.paid}\nবাকি: ₹${due}\nধন্যবাদ।`;
+ else if(kind==='done') msg=`নমস্কার ${c.name},\nআপনার গাড়ির সার্ভিসিং সম্পন্ন হয়েছে।\nগাড়ি: ${c.vehicle||'—'}\nZ EXPRESSAUTOCARE-এ আসার জন্য ধন্যবাদ।`;
+ else msg=`নমস্কার ${c.name},\nZ EXPRESSAUTOCARE-এর হিসাব অনুযায়ী আপনার ${c.vehicle||'গাড়ি'}-র বকেয়া ₹${due}। সুবিধামতো বকেয়া পরিশোধ করবেন। ধন্যবাদ।`;
+ window.open('https://wa.me/'+phone+'?text='+encodeURIComponent(msg),'_blank');
+}
+
+function salaryPay(id){let s=db.staff.find(x=>x.id===id),v=prompt('কত টাকা বেতন দিলেন? / Salary paid',String(s.salary));if(v===null||!Number.isFinite(+v)||+v<=0)return;db.tx.unshift({id:Date.now(),type:'expense',date:today(),amount:+v,category:'Staff salary',note:s.name});save()}
+function exportData(){let blob=new Blob([JSON.stringify(db,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='Z-ExpressAutoCare-backup-'+today()+'.json';a.click();URL.revokeObjectURL(a.href)}
+function restoreData(){let f=$('restoreFile').files[0];if(!f)return alert('আগে backup file নির্বাচন করুন / Choose a backup file first');let r=new FileReader();r.onload=()=>{try{let x=JSON.parse(r.result);if(!x.customers||!x.staff||!x.tx)throw Error();if(confirm('বর্তমান ডেটা বদলে ব্যাকআপ ফিরিয়ে আনবেন? / Replace current data with backup?')){db=x;save();alert('রিস্টোর হয়েছে / Restored')}}catch(e){alert('ভুল backup file / Invalid backup file')}};r.readAsText(f)}
+$('customerSearch').addEventListener('input',render);$('txForm').date.value=today();render();
+</script></body></html>
